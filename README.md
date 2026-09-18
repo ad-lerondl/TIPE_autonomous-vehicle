@@ -3,7 +3,7 @@
 Projet d'initiative personnelle encadrée (TIPE) sur le thème **« La Ville »**[cite: 7, 9].  
 Implémentation et simulation sous Python d'un algorithme réactif d'évitement d'obstacles et de génération de trajectoires pour véhicule autonome, basé sur la **méthode des tentacules** (F. von Hundelshausen et al., 2008).
 
-![Clothoïdes](assets/GIF_obstacle.png)
+![Clothoïdes](assets/GIF_obstacle.gif)
 
 ## 📌 Présentation du Projet
 L'objectif est d'assurer la navigation sécurisée d'un véhicule en environnement urbain contraint[cite: 7]. Face aux limites d'une première approche matricielle discrète en temps de calcul[cite: 1, 7], le projet s'appuie sur une structure orientée objet :

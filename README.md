@@ -8,7 +8,7 @@ Ce projet propose une implémentation et une simulation Python d'un algorithme r
 
 ---
 
-## 📌 Présentation du Projet
+## Présentation du Projet
 
 L'objectif principal est d'assurer la navigation sécurisée d'un véhicule évoluant en milieu urbain contraint sans recourir à une cartographie globale lourde (type SLAM).
 
@@ -20,7 +20,7 @@ Face aux limitations d'une approche initiale discrète par matrice d'occupation 
 
 ---
 
-## 📐 Modélisation Théorique & Mathématique
+## Modélisation Théorique & Mathématique
 
 ### 1. Primitives géométriques : Clothoïdes & Intégrales de Fresnel
 Afin d'assurer la continuité de la courbure $\kappa(s)$ et d'éviter les discontinuités d'accélération latérale au volant, les trajectoires candidates adoptent un profil clothoïdaire paramétré par l'abscisse curviligne $s$ :
@@ -47,7 +47,7 @@ Les efforts transversaux aux pneumatiques reposent sur les formulations de déri
 
 ---
 
-## 📂 Structure du Répertoire
+## Structure du Répertoire
 
 ```text
 ├── main.py                    # Script principal (simulation complète avec clothoïdes & télémétrie)
@@ -62,7 +62,7 @@ Les efforts transversaux aux pneumatiques reposent sur les formulations de déri
 └── tex-report/                # Rapport technique écrit au format tex
 ```
 
-## ⚙️ Installation & Utilisation
+## Installation & Utilisation
 
 ### Prérequis
 Python 3.8+ avec les bibliothèques scientifiques standards.
@@ -85,14 +85,14 @@ python main.py
 - La fenêtre 2 trace en temps réel l'évolution de la vitesse calculée et de l'angle de braquage du volant.
 
 
-## 📄 Rapport & Présentation
+## Rapport & Présentation
 Le rapport d'étude complet ainsi que le support d'oral sont consultables directement :
 
 - Rapport technique (PDF) (Sources LaTeX disponibles dans le dossier report/)
 - Présentation orale (PDF)
 - MCOT officielle (PDF)
 
-## 📚 Références bibliographiques
+## Références bibliographiques
 
 <a id="ref-1"></a>[1]. **F. von Hundelshausen, M. Himmelsbach, F. Hecker, A. Mueller, H.-J. Wuensche**,  
    *Driving with Tentacles: Integral Structures for Sensing and Motion*,  

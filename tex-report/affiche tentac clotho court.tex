@@ -1,0 +1,62 @@
+\chapter{Affichage des tentacules en forme de clothoïdes}
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[scale=0.7]{Affichage clotho.png}
+\end{figure}
+\vspace{120pt}
+
+\begin{mintedbox}{python}
+"""Affiche la voiture avec ses tentacules clothoïdaires.
+"""
+
+
+def y(t, rap, ro):
+    return integrale(lambda p: np.cos(rap*p**2 + ro*p)/3, 0, t)[0]
+
+
+def x(t, rap, ro):
+    return integrale(lambda p: np.sin(rap*p**2 + ro*p)/3, 0, t)[0]
+
+
+courbure_tentac_initiale = BRAQUAGE_VOLANT * np.pi / 180
+
+
+class Tentacule:
+    def __init__(self, voiture, rap, ro, axes, L):
+        self.voiture = voiture
+        self.axes = axes
+
+        self.L = L  # formule empirique, équation (9.15) p.128
+        self.precision = PRECISION
+
+        xdata = [x(t, rap, ro) for t in np.linspace(0, int(L), self.precision)]
+        ydata = [y(t, rap, ro) for t in np.linspace(0, int(L), self.precision)]
+        self.patch = matplotlib.lines.Line2D(xdata, ydata, color='green')
+        self.patch.set_transform(matplotlib.transforms.Affine2D().rotate_deg_around(0, 0, voiture.angle - 90) + matplotlib.transforms.Affine2D().translate(voiture.x, voiture.y) + self.axes.transData)
+
+
+figure_ref_terre, axes_ref_terre = plt.subplots()
+figure_ref_terre.suptitle("TIPE")
+simulation_voision_terrestre = Simulation_Ref_Terre()
+
+shape_voiture = matplotlib.patches.Rectangle(POSITION_VOITURE_INIT, LONGUEUR_VEHIC, LARGEUR_VEHIC, INCLINAISON_VOITURE_INIT)
+voiture = Voiture(shape_voiture, 0, 0, axes_ref_terre)
+axes_ref_terre.add_patch(voiture.shape_voiture)
+tentacules = []
+
+L = 7*VITESSE_INIT_VOIT - 5  # formule empirique, équation (9.15) p.128
+ro_max = ACCEL_LAT_MAX / VITESSE_INIT_VOIT**2
+distance_collision = VITESSE_INIT_VOIT**2 / 2*ACCEL_LAT_MAX
+
+rap_min = (-ro_max - courbure_tentac_initiale) / (distance_collision/2)
+rap_max = (+ro_max - courbure_tentac_initiale) / (distance_collision/2)
+deltas = np.linspace(rap_min, rap_max, 40)
+for rap in deltas:
+    tentacules.append(Tentacule(voiture, rap, courbure_tentac_initiale + rap*L, axes_ref_terre, L))
+for k in range(40):
+    axes_ref_terre.add_line(tentacules[k].patch)
+
+plt.autoscale()
+plt.show()
+
+\end{mintedbox}

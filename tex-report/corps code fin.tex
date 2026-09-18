@@ -1,0 +1,88 @@
+\chapter{Dernières lignes peu ou prou communes}
+\begin{mintedbox}{python}
+"""
+SOME CODE
+"""
+
+
+# création figure + axes
+figure_ref_terre, axes_simu = plt.subplots()
+figure_data, (axes_vitesse, axes_braquage) = plt.subplots(2, 1, sharex=True)
+# titre
+figure_ref_terre.suptitle("Animation")
+figure_data.suptitle("Données en temps réel")
+axes_vitesse.set_title("Vitesse")
+axes_braquage.set_title("Braquage")
+axes_braquage.set_xlabel("Temps")
+
+# création de la forme de la voiture
+shape_voiture = matplotlib.patches.Rectangle(POSITION_VOITURE_INIT, LONGUEUR_VEHIC, LARGEUR_VEHIC, fill=False, zorder=float('inf'))
+shape_voiture.rotation_point = 'center'
+shape_voiture.set_angle(INCLINAISON_VOITURE_INIT)
+
+# création de la voiture
+voiture = Voiture(shape_voiture, [axes_simu, axes_vitesse, axes_braquage], Tentacule_clothoïdaire)
+
+# ajout du dessin de la voiture à la figure
+axes_simu.add_patch(voiture.shape_voiture)
+
+# création de la forme de l'obstacle
+shape_obstacle = matplotlib.patches.Rectangle((30, -2.5), 2, 1.5, fill=True, zorder=float('inf'), color='cyan')
+obstacle1 = Obstacle_fixe(shape_obstacle)
+axes_simu.add_patch(obstacle1.patch)
+
+# création des bords de route
+shape_route_haut = matplotlib.patches.Rectangle((-10, 5), 90, 2)
+route_haut = Obstacle_fixe(shape_route_haut)
+axes_simu.add_patch(route_haut.patch)
+
+shape_route_bas = matplotlib.patches.Rectangle((-10, -5), 78, 2)
+route_bas = Obstacle_fixe(shape_route_bas)
+axes_simu.add_patch(route_bas.patch)
+
+shape_route_gauche = matplotlib.patches.Rectangle((68, -45), 2, 42)
+route_gauche = Obstacle_fixe(shape_route_gauche)
+axes_simu.add_patch(route_gauche.patch)
+
+shape_route_droite = matplotlib.patches.Rectangle((78, -45), 2, 50)
+route_droite = Obstacle_fixe(shape_route_droite)
+axes_simu.add_patch(route_droite.patch)
+
+# création de la simulation
+simulation = Simulation_Ref_Terre([voiture], [obstacle1, route_bas, route_haut, route_droite, route_gauche])
+
+# création et lancement de l'animation
+anim = matplotlib.animation.FuncAnimation(figure_ref_terre,
+                                          simulation.animer,
+                                          init_func=lambda: [voiture.shape_voiture for voiture in simulation.voitures] + [tentacule.patch for tentacule in simulation.new_tentacules] + [tentacule.patch for tentacule in simulation.old_tentacules],
+                                          fargs=[],
+                                          interval=35,
+                                          cache_frame_data=False,
+                                          blit=True,
+                                          repeat=True)
+
+# création d'un timer
+timer = figure_ref_terre.canvas.new_timer(interval=TEMPS_REAC)
+if SECURITE is not False:
+    timer2 = figure_ref_terre.canvas.new_timer(40)
+    timer2.add_callback(simulation.collisions)
+    timer2.start()
+    simulation.ajout_timer(timer2)
+    figure_ref_terre.canvas.mpl_connect('close_event', lambda event: timer2.stop())
+# ajout d'une fonction appelée itérativement
+timer.add_callback(simulation.gestion_tentac, voiture)
+# démarrage du timer
+timer.start()
+
+simulation.ajout_anim(anim)
+simulation.ajout_timer(timer)
+# stop le timer si on ferme la figure (pour éviter qu'une fonction continue de tourner en boucle sans intérêt une fois tout terminé, c'est plutôt mal vu...!)
+figure_ref_terre.canvas.mpl_connect('close_event', lambda event: timer.stop())
+figure_ref_terre.canvas.mpl_connect('key_press_event', lambda event: (print("Key Pressed"), simulation.pause_replay()))
+
+axes_simu.autoscale()
+# axes_simu.set(xlim=(-50, 50), ylim=(-50, 150))
+axes_simu.axis('equal')
+plt.show()
+
+\end{mintedbox}

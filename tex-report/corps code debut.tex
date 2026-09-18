@@ -1,0 +1,50 @@
+\chapter{1\up{ères} lignes peu ou prou communes}
+\begin{mintedbox}{python}
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Dec 19 19:50:23 2022
+
+@author: adaml
+"""
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.animation
+import matplotlib.patches
+import matplotlib.transforms
+import matplotlib.lines
+import scipy.interpolate
+import shapely
+import shapely.geometry
+import time
+from scipy.integrate import quad as integrale
+
+
+VITESSE_INIT_VOIT = 5  # vitesse initiale du véhicule
+VITESSE_MAX_VOIT = 15  # vitesse maximale (pour rester dans les zones linéaires des modèles)
+ACCEL_LAT_MAX = 1.5  # accélération latérale maximale (pour rester dans les zones linéaires des modèles)
+LONGUEUR_VEHIC = 5  # longueur du véhicule
+LARGEUR_VEHIC = 2  # largeur du véhicule
+POSITION_VOITURE_INIT = (-10, -2)  # position (x, y) initiale de la voiture
+INCLINAISON_VOITURE_INIT = 0  # inclinaison initiale de la voiture (en degrés)
+BRAQUAGE_VOLANT_INIT = 0  # angle volant/voiture en degrés
+PRECISION = 15  # nombre de points définissant l'arc de cercle. ie nombre de positions où la voiture ira
+TEMPS_REAC = 90  # temps de génération de tentacules
+CONE_BRAQUAGE = 0.02  # valeur de braquage définissant des trajectoires "lisses". cf get_tentacules_navigables_et_lisses
+COMMENTAIRES = True  # si des commentaires sur l'évolution de l'algo doivent être affichés dans la console
+PETIT_POUCET = True  # si on veut récupérer la trajectoire de la voiture
+SECURITE = True  # vérifie les collisions. False si aucune sécu, None si check sans arrêter, True si arrêt lorsque collision
+
+# courbure = ro
+# courbure = 1/rayon dans le cas d'un cercle
+# braquage = delta = arctan(L/rayon) quasi logique (schéma + perpendiculaire)
+# longueur = angle*rayon
+# empattement +-= longueur voiture
+
+
+"""
+SOME CODE
+"""
+
+\end{mintedbox}

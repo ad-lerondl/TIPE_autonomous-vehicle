@@ -1,0 +1,75 @@
+\documentclass[11pt,a4paper,openany]{extbook}
+\usepackage{tcolorbox}
+\usepackage{lipsum}
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+\pagestyle{plain}
+\makeatletter
+\usepackage{geometry}
+\geometry{hmargin=1.5cm,vmargin=1.5cm}
+\tcbuselibrary{minted,breakable,xparse,skins}
+
+
+\setcounter{secnumdepth}{5}% profondeur de la table des matières
+\usepackage{titlesec}
+\titleformat % design des titres des chapitres
+{\chapter}
+[display]
+{\centering\normalfont\Large\scshape\bfseries}
+{\rule[3pt]{0.15\linewidth}{3pt}\quad\thechapter\quad \rule[3pt] {0.15\linewidth}{3pt}}
+{0\baselineskip}%espace vertical entre chapitre et nom du chapitre
+{\rule{\linewidth}{0.5pt}\break\Huge}
+[\vspace{-0.5\baselineskip}\rule{\linewidth}{0.5pt}\vspace{0\baselineskip}]
+
+\definecolor{bg}{gray}{0.95}
+\DeclareTCBListing{mintedbox}{O{}m!O{}}{%
+  breakable=true,
+  listing engine=minted,
+  listing only,
+  minted language=#2,
+  minted style=default,
+  minted options={%
+    linenos,
+    gobble=0,
+    breaklines=true,
+    breakafter=,,
+    fontsize=\small,
+    numbersep=8pt,
+    #1},
+  boxsep=0pt,
+  left skip=0pt,
+  right skip=0pt,
+  left=25pt,
+  right=0pt,
+  top=3pt,
+  bottom=3pt,
+  arc=5pt,
+  leftrule=0pt,
+  rightrule=0pt,
+  bottomrule=3pt,
+  toprule=3pt,
+  colback=bg,
+  colframe=orange!70,
+  enhanced,
+  overlay={%
+    \begin{tcbclipinterior}
+    \fill[orange!20!white] (frame.south west) rectangle ([xshift=20pt]frame.north west);
+    \end{tcbclipinterior}},
+  #3}
+\begin{document}
+\title{\Huge\textbf{Génération et suivi de trajectoire par une voiture autonome}\\ - \\\huge Programmes Python}
+\author{\\ \\LÉRONDEL--TOUZÉ Adam, TIPE, Candidat n°23764}
+\date{}
+\maketitle
+\tableofcontents
+\include{corps code debut}
+\include{affiche tentac arc cercle court}
+\include{affiche tentac clotho court}
+\include{corps code fin}
+\include{deplacement pts court}
+\include{collision sans anim court}
+\include{enferme carre court}
+\include{evitement arc de cercle court}
+\include{evitement fine approche trace court}
+\include{Final version}
+\end{document}
